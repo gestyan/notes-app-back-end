@@ -1,6 +1,7 @@
 const { nanoid } = require("nanoid");
 const notes = require("./notes");
 
+//  add note
 const addNoteHandler = (request, h) => {
   const { title, tags, body } = request.payload;
 
@@ -41,6 +42,7 @@ const addNoteHandler = (request, h) => {
   return response;
 };
 
+// get all notes
 const getAllNotesHandler = () => ({
   status: "success",
   data: {
@@ -48,6 +50,7 @@ const getAllNotesHandler = () => ({
   },
 });
 
+// get specified note
 const getNoteByIdHandler = (request, h) => {
   const { id } = request.params;
   const note = notes.filter((n) => n.id === id)[0];
@@ -67,12 +70,13 @@ const getNoteByIdHandler = (request, h) => {
   return response;
 };
 
+// edit note
 const editNoteByHandler = (request, h) => {
   //mendapatkan nilai id
   const { id } = request.params;
 
   //mendapatkan data notes yang dikirim melalui body request
-  const { titile, tags, body } = request.payload;
+  const { title, tags, body } = request.payload;
 
   //mendapatkan nilai updateAt dengan menggunakan Date().toISOstring()
   const updatedAt = new Date().toISOString();
@@ -83,7 +87,7 @@ const editNoteByHandler = (request, h) => {
   if (index !== -1) {
     notes[index] = {
       ...notes[index],
-      titile,
+      title,
       tags,
       body,
       updatedAt,
@@ -105,6 +109,7 @@ const editNoteByHandler = (request, h) => {
   return response;
 };
 
+// delete note
 const deleteNoteByIdHandler = (request, h) => {
   // mendapatkan nilai id
   const { id } = request.params;
